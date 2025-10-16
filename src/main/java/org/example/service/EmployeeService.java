@@ -95,7 +95,6 @@ public class EmployeeService {
         return employeeRepository.save(emp).getName() +" moved to " +emp.getDepartment().getName();
     }
 
-    @Transactional(readOnly = true)
     public Map<String, Object>  getAll(int page, int size){
         PageRequest paging = PageRequest.of(page,size);
         Page<Employee> pageEmployees = employeeRepository.findAll(paging);
@@ -142,20 +141,23 @@ public class EmployeeService {
 
     //@JsonIgnoreProperties({"pageable", "sort"})
     @Transactional(readOnly = true)
-    public Map<String, Object> getEmployeeIds(int page, int size){
+    public Map<String, Object> getEmployeeIds(int page, int size, boolean lookup){
         PageRequest paging = PageRequest.of(page,size);
-        Page<EmployeeIDView> pageEmployees = employeeRepository.findAllProjectedBy(paging);
-        List<EmployeeIDView> content = pageEmployees.getContent();
-        Map<String, Object> response = new HashMap<>();
-        PagedResponse<EmployeeIDView> paged = new PagedResponse<>(
-                content,
-                pageEmployees.getNumber(),
-                pageEmployees.getTotalPages()
-        );
-        response.put("employees", paged.getContent());
-        response.put("currentPage", paged.getCurrentPage());
-        response.put("totalPages", paged.getTotalPages());
-
-        return response;
+        if(lookup) {
+            Page<EmployeeIDView> pageEmployees = employeeRepository.findAllProjectedBy(paging);
+            List<EmployeeIDView> content = pageEmployees.getContent();
+            Map<String, Object> response = new HashMap<>();
+            PagedResponse<EmployeeIDView> paged = new PagedResponse<>(
+                    content,
+                    pageEmployees.getNumber(),
+                    pageEmployees.getTotalPages()
+            );
+            response.put("employees", paged.getContent());
+            response.put("currentPage", paged.getCurrentPage());
+            response.put("totalPages", paged.getTotalPages());
+            return response;
+        } else {
+            return getAll(page, size);
+        }
     }
 }

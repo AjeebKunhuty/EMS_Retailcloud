@@ -2,13 +2,8 @@ package org.example.controller;
 
 import org.example.DTO.EmployeeDTO;
 import org.example.DTO.EmployeeRequestDTO;
-import org.example.model.Department;
-import org.example.model.Employee;
-import org.example.service.DepartmentService;
 import org.example.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,18 +37,11 @@ public class EmployeeController {
     }
 
     @GetMapping()
-    public ResponseEntity<Map<String, Object>> getEmployees(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size){
-         return ResponseEntity.ok(employeeService.getAll(page, size));
-    }
-
-    @GetMapping()
     public ResponseEntity<Map<String, Object>> getEmployeeNameId(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(required = false) boolean lookup){
-        return ResponseEntity.ok(employeeService.getEmployeeIds(page,size));
+        return ResponseEntity.ok(employeeService.getEmployeeIds(page,size,lookup));
     }
 
     @GetMapping("/all")

@@ -2,7 +2,6 @@ package org.example.controller;
 
 import org.example.DTO.DepartmentDTO;
 import org.example.DTO.DepartmentRequestDTO;
-import org.example.model.Department;
 import org.example.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +34,6 @@ public class DepartmentController {
         return ResponseEntity.ok("Department "+id+" deleted successfully");
     }
 
-
     @GetMapping()
     public ResponseEntity<Map<String, Object>> getEmployees(
             @RequestParam(defaultValue = "0") int page,
@@ -43,6 +41,5 @@ public class DepartmentController {
             @RequestParam(required = false) String expand){
         return ResponseEntity.ok(departmentService.getEmployees(page, size, expand));
     }
-
 
 }
