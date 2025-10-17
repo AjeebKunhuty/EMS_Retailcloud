@@ -42,4 +42,18 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.getEmployees(page, size, expand));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Map<String, Object>> getEmployees(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size){
+        return ResponseEntity.ok(departmentService.getCount(page, size));
+    }
+
+    @GetMapping("/salaryAnalytics")
+    public ResponseEntity<Map<String, Object>> getSalaryAnalytics(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size){
+        return ResponseEntity.ok(departmentService.getSalaryDetails(page, size));
+    }
+
 }

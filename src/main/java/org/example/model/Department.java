@@ -1,14 +1,8 @@
 package org.example.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Department {
@@ -17,7 +11,7 @@ public class Department {
     private Integer id;
 
     private String name;
-    private LocalDate creation_date;
+    private LocalDate creationDate;
 
     @OneToOne
     @JoinColumn(name = "head")
@@ -29,8 +23,8 @@ public class Department {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public LocalDate getCreation_date(){ return creation_date; }
-    public void setCreation_date(LocalDate date) { this.creation_date = date; }
+    public LocalDate getCreationDate(){ return creationDate; }
+    public void setCreationDate(LocalDate date) { this.creationDate = date; }
 
     public Employee getHead() { return head; }
     public void setHead(Employee head) { this.head = head; }

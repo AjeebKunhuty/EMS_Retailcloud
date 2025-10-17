@@ -10,21 +10,21 @@ public class EmployeeRequestDTO {
     private Integer department;
     private String address;
     private String role;
-    private LocalDate joining_date;
-    private BigDecimal bonus_percentage;
+    private LocalDate joiningDate;
+    private BigDecimal bonusPercentage;
     private Integer manager;
     
     public EmployeeRequestDTO(String name, LocalDate dob, BigDecimal salary,
                               Integer department, String address, String role,
-                              LocalDate joining_date, BigDecimal bonus_percentage, Integer manager) {
+                              LocalDate joiningDate, BigDecimal bonusPercentage, Integer manager) {
         this.name = name;
         this.dob = dob;
         this.salary = salary;
         this.department = department;
         this.address = address;
         this.role = role;
-        this.joining_date = joining_date;
-        this.bonus_percentage = bonus_percentage;
+        this.joiningDate = joiningDate;
+        this.bonusPercentage = bonusPercentage;
         this.manager = manager;
     }
     
@@ -46,11 +46,11 @@ public class EmployeeRequestDTO {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
-    public LocalDate getJoining_date() { return joining_date; }
-    public void setJoining_date(LocalDate joining_date) { this.joining_date = joining_date; }
+    public LocalDate getJoiningDate() { return joiningDate; }
+    public void setJoiningDate(LocalDate joiningDate) { this.joiningDate = joiningDate; }
 
-    public BigDecimal getBonus_percentage() { return bonus_percentage; }
-    public void setBonus_percentage(BigDecimal bonus_percentage) { this.bonus_percentage = bonus_percentage; }
+    public BigDecimal getBonusPercentage() { return bonusPercentage; }
+    public void setBonusPercentage(BigDecimal bonusPercentage) { this.bonusPercentage = bonusPercentage; }
 
     public Integer getManager() { return manager; }
     public void setManager(Integer manager) { this.manager = manager; }

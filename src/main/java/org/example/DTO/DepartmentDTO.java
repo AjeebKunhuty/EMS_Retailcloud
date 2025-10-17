@@ -3,6 +3,7 @@ package org.example.DTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.example.model.Employee;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,10 @@ public class DepartmentDTO {
     private LocalDate creation_date;
     private String head;
     private List<EmployeeDTO> employeeDTOList;
+    private int employeeCount;
+    private BigDecimal min;
+    private BigDecimal max;
+    private BigDecimal avg;
 
     public DepartmentDTO(Integer id, String name, LocalDate creation_date, String head){
         this.id = id;
@@ -30,9 +35,32 @@ public class DepartmentDTO {
         this.employeeDTOList = employeeDTOList;
     }
 
+    public DepartmentDTO(Integer id, String name, LocalDate creation_date, String head, int employeeCount){
+        this.id = id;
+        this.name = name;
+        this.creation_date = creation_date;
+        this.head = head;
+        this.employeeCount = employeeCount;
+    }
+
+    public DepartmentDTO(Integer id, String name, LocalDate creation_date, String head, BigDecimal min, BigDecimal max, BigDecimal avg){
+        this.id = id;
+        this.name = name;
+        this.creation_date = creation_date;
+        this.head = head;
+        this.max = max;
+        this.min = min;
+        this.avg = avg;
+    }
+
+
     public String getName() { return name; }
     public Integer getId() { return id; }
     public LocalDate getCreation_date() { return creation_date; }
     public String getHead() { return head; }
     public List<EmployeeDTO> getEmployeeDTOList() { return employeeDTOList; }
+    public int getEmployeeCount() { return employeeCount; }
+    public BigDecimal getMax() { return max; }
+    public BigDecimal getAvg() { return avg; }
+    public BigDecimal getMin() { return min; }
 }

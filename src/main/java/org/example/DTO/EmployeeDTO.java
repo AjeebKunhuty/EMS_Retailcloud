@@ -11,11 +11,11 @@ public class EmployeeDTO {
     private String department;
     private String address;
     private String role;
-    private LocalDate joining_date;
-    private BigDecimal bonus_percentage;
+    private LocalDate joiningDate;
+    private BigDecimal bonusPercentage;
     private String manager;
 
-    public EmployeeDTO(Integer id, String name, LocalDate dob, BigDecimal salary, String department, String address, String role, LocalDate joining_date, BigDecimal bonus_percentage, String manager){
+    public EmployeeDTO(Integer id, String name, LocalDate dob, BigDecimal salary, String department, String address, String role, LocalDate joiningDate, BigDecimal bonusPercentage, String manager){
         this.id = id;
         this.name = name;
         this.dob = dob;
@@ -23,8 +23,8 @@ public class EmployeeDTO {
         this.department = department;
         this.address = address;
         this.role = role;
-        this.joining_date = joining_date;
-        this.bonus_percentage = bonus_percentage;
+        this.joiningDate = joiningDate;
+        this.bonusPercentage = bonusPercentage;
         this.manager = manager;
     }
 
@@ -35,7 +35,7 @@ public class EmployeeDTO {
     public String getDepartment() { return department; }
     public String getAddress() { return address; }
     public String getRole() { return role; }
-    public LocalDate getJoining_date() { return joining_date; }
-    public BigDecimal getBonus_percentage() { return bonus_percentage; }
+    public LocalDate getJoiningDate() { return joiningDate; }
+    public BigDecimal getBonusPercentage() { return bonusPercentage; }
     public String getManager() { return manager; }
 }

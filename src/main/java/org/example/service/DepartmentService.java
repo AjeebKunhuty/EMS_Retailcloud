@@ -32,7 +32,7 @@ public class DepartmentService {
         Department department = new Department();
         department.setId(null);
         department.setName(dep.getName());
-        department.setCreation_date(dep.getCreation_date());
+        department.setCreationDate(dep.getCreationDate());
 
         Employee head = employeeRepository.findById(dep.getHead()).orElseThrow(()->
                 new RuntimeException("Department head not found"));
@@ -44,16 +44,15 @@ public class DepartmentService {
     @Transactional
     public DepartmentDTO update(Integer id, DepartmentRequestDTO department){
         Department dep = getById(id);
-        dep.setName(department.getName());
-        dep.setCreation_date(department.getCreation_date());
-        Employee head = employeeRepository.findById(department.getHead()).orElseThrow(()->
-                new RuntimeException("Department head not found"));
-        dep.setHead(head);
+        dep.setName(department.getName() != null ? department.getName() : dep.getName());
+        dep.setCreationDate(department.getCreationDate() != null ? department.getCreationDate() : dep.getCreationDate());
+        dep.setHead(department.getHead() != null ? employeeRepository.findById(department.getHead()).orElseThrow(()->
+                new RuntimeException("Department head not found")) : dep.getHead());
         departmentRepository.save(dep);
         return new DepartmentDTO(
                 dep.getId(),
                 dep.getName(),
-                dep.getCreation_date(),
+                dep.getCreationDate(),
                 dep.getHead() != null ? dep.getHead().getName() : null
         );
     }
@@ -84,7 +83,7 @@ public class DepartmentService {
                     .map(dept -> new DepartmentDTO(
                             dept.getId(),
                             dept.getName(),
-                            dept.getCreation_date(),
+                            dept.getCreationDate(),
                             dept.getHead() != null ? dept.getHead().getName() : null,
                             employeeRepository.findByDepartmentId(dept.getId()).stream()
                                     .map(emp -> new EmployeeDTO(
@@ -95,8 +94,8 @@ public class DepartmentService {
                                             emp.getDepartment() != null ? emp.getDepartment().getName() : null,
                                             emp.getAddress(),
                                             emp.getRole(),
-                                            emp.getJoining_date(),
-                                            emp.getBonus_percentage(),
+                                            emp.getJoiningDate(),
+                                            emp.getBonusPercentage(),
                                             emp.getManager() != null ? emp.getManager().getName() : null
                                     )).collect(Collectors.toList())
                     )).collect(Collectors.toList());
@@ -112,7 +111,7 @@ public class DepartmentService {
                     .map(emp -> new DepartmentDTO(
                             emp.getId(),
                             emp.getName(),
-                            emp.getCreation_date(),
+                            emp.getCreationDate(),
                             emp.getHead() != null ? emp.getHead().getName() : null
                     )).collect(Collectors.toList());
             Map<String, Object> response = new HashMap<>();
@@ -121,5 +120,43 @@ public class DepartmentService {
             response.put("totalPages", pageDepartments.getTotalPages());
             return response;
         }
+    }
+
+    public Map<String, Object> getCount(int page, int size) {
+        PageRequest paging = PageRequest.of(page, size);
+        Page<Department> pageDepartments = departmentRepository.findAll(paging);
+        List<DepartmentDTO> dtoList = pageDepartments.getContent().stream()
+                .map(dept -> new DepartmentDTO(
+                        dept.getId(),
+                        dept.getName(),
+                        dept.getCreationDate(),
+                        dept.getHead() != null ? dept.getHead().getName() : null,
+                        employeeRepository.countByDepartmentId(dept.getId())
+                )).collect(Collectors.toList());
+        Map<String, Object> response = new HashMap<>();
+        response.put("departments", dtoList);
+        response.put("currentPage", pageDepartments.getNumber());
+        response.put("totalPages", pageDepartments.getTotalPages());
+        return response;
+    }
+
+    public Map<String, Object> getSalaryDetails(int page, int size){
+        PageRequest paging = PageRequest.of(page, size);
+        Page<Department> pageDepartments = departmentRepository.findAll(paging);
+        List<DepartmentDTO> dtoList = pageDepartments.getContent().stream()
+                .map(dept -> new DepartmentDTO(
+                        dept.getId(),
+                        dept.getName(),
+                        dept.getCreationDate(),
+                        dept.getHead() != null ? dept.getHead().getName() : null,
+                        employeeRepository.findTopSalaryByDepartmentIdOrderBySalary(dept.getId()).getSalary(),
+                        employeeRepository.findTopSalaryByDepartmentIdOrderBySalaryDesc(dept.getId()).getSalary(),
+                        employeeRepository.avgSalaryByDepartmentId(dept.getId())
+                )).collect(Collectors.toList());
+        Map<String, Object> response = new HashMap<>();
+        response.put("departments", dtoList);
+        response.put("currentPage", pageDepartments.getNumber());
+        response.put("totalPages", pageDepartments.getTotalPages());
+        return response;
     }
 }

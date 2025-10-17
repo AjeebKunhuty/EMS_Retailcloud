@@ -5,13 +5,13 @@ import java.time.LocalDate;
 public class DepartmentRequestDTO {
     private Integer id;
     private String name;
-    private LocalDate creation_date;
+    private LocalDate creationDate;
     private Integer head;
 
-    public DepartmentRequestDTO(Integer id, String name, LocalDate creation_date, Integer head){
+    public DepartmentRequestDTO(Integer id, String name, LocalDate creationDate, Integer head){
         this.id = id;
         this.name = name;
-        this.creation_date = creation_date;
+        this.creationDate = creationDate;
         this.head = head;
     }
 
@@ -21,8 +21,8 @@ public class DepartmentRequestDTO {
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
-    public LocalDate getCreation_date() { return creation_date; }
-    public void setCreation_date(LocalDate creation_date) { this.creation_date = creation_date; }
+    public LocalDate getCreationDate() { return creationDate; }
+    public void setCreationDate(LocalDate creationDate) { this.creationDate = creationDate; }
 
     public Integer getHead() { return head; }
     public void setHead(Integer head) { this.head = head; }

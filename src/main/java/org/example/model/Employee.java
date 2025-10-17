@@ -1,8 +1,5 @@
 package org.example.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -22,10 +19,10 @@ public class Employee {
 
     private String address;
     private String role;
-    private LocalDate joining_date;
+    private LocalDate joiningDate;
 
     @Column(precision = 5, scale = 2)
-    private BigDecimal bonus_percentage;
+    private BigDecimal bonusPercentage;
 
     @ManyToOne
     @JoinColumn(name = "department")
@@ -53,11 +50,11 @@ public class Employee {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
-    public LocalDate getJoining_date() { return joining_date; }
-    public void setJoining_date(LocalDate joining_date) { this.joining_date = joining_date; }
+    public LocalDate getJoiningDate() { return joiningDate; }
+    public void setJoiningDate(LocalDate joiningDate) { this.joiningDate = joiningDate; }
 
-    public BigDecimal getBonus_percentage() { return bonus_percentage; }
-    public void setBonus_percentage(BigDecimal bonus_percentage) { this.bonus_percentage = bonus_percentage; }
+    public BigDecimal getBonusPercentage() { return bonusPercentage; }
+    public void setBonusPercentage(BigDecimal bonusPercentage) { this.bonusPercentage = bonusPercentage; }
 
     public Department getDepartment() { return department; }
     public void setDepartment(Department department) { this.department = department; }
