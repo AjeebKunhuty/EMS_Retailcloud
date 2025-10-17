@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
-    int countByDepartmentId(Integer id);
+    Integer countByDepartmentId(Integer id);
     List<Employee> findByDepartmentId(Integer id);
     Page<EmployeeBasicView> findAllBasicProjectedBy(Pageable pageable);
 

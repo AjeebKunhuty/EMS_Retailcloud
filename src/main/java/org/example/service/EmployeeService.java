@@ -58,9 +58,9 @@ public class EmployeeService {
         emp.setRole(employee.getRole() != null ? employee.getRole() : emp.getRole());
         emp.setJoiningDate(employee.getJoiningDate() != null ? employee.getJoiningDate() : emp.getJoiningDate());
         emp.setBonusPercentage(employee.getBonusPercentage() != null ? employee.getBonusPercentage() : emp.getBonusPercentage());
-        Department dept = departmentRepository.findById(employee.getDepartment()).orElseThrow(() -> new RuntimeException(
-                "Department not found with id: "+employee.getDepartment().toString()));;
-        emp.setDepartment(dept != null ? dept : emp.getDepartment());
+
+        emp.setDepartment(employee.getDepartment() != null ? departmentRepository.findById(employee.getDepartment()).orElseThrow(() -> new RuntimeException(
+                "Department not found with id: "+employee.getDepartment().toString())) : emp.getDepartment());
 
         emp.setManager(employee.getManager() != null ? getById(employee.getManager()) : emp.getManager());
         employeeRepository.save(emp);
@@ -126,7 +126,12 @@ public class EmployeeService {
                         emp.getId(),
                         emp.getName(),
                         emp.getCreationDate(),
-                        emp.getHead() != null ? emp.getHead().getName() : null
+                        emp.getHead() != null ? emp.getHead().getName() : null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
                 )).collect(Collectors.toList());
         Map<String, Object> response = new HashMap<>();
         response.put("departments", dtoList);
@@ -216,6 +221,6 @@ public class EmployeeService {
     public String resign(Integer empId) {
         Employee employee = getById(empId);
         employee.setDepartment(null);
-        return  employeeRepository.save(employee).getName() +" set to null";
+        return  employeeRepository.save(employee).getName() +" department set to null";
     }
 }

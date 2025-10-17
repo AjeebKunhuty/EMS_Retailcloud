@@ -53,7 +53,12 @@ public class DepartmentService {
                 dep.getId(),
                 dep.getName(),
                 dep.getCreationDate(),
-                dep.getHead() != null ? dep.getHead().getName() : null
+                dep.getHead() != null ? dep.getHead().getName() : null,
+                null,
+                null,
+                null,
+                null,
+                null
         );
     }
 
@@ -74,9 +79,9 @@ public class DepartmentService {
                 -> new RuntimeException("Department not found with id: " + id.toString()));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Map<String, Object> getEmployees(int page, int size, String expand){
-        if("employee".equals(expand)) {
+        if(expand != null  && expand.equals("employee")) {
             PageRequest paging = PageRequest.of(page, size);
             Page<Department> pageDepartments = departmentRepository.findAll(paging);
             List<DepartmentDTO> dtoList = pageDepartments.getContent().stream()
@@ -97,7 +102,11 @@ public class DepartmentService {
                                             emp.getJoiningDate(),
                                             emp.getBonusPercentage(),
                                             emp.getManager() != null ? emp.getManager().getName() : null
-                                    )).collect(Collectors.toList())
+                                    )).collect(Collectors.toList()),
+                            null,
+                            null,
+                            null,
+                            null
                     )).collect(Collectors.toList());
             Map<String, Object> response = new HashMap<>();
             response.put("departments", dtoList);
@@ -112,7 +121,12 @@ public class DepartmentService {
                             emp.getId(),
                             emp.getName(),
                             emp.getCreationDate(),
-                            emp.getHead() != null ? emp.getHead().getName() : null
+                            emp.getHead() != null ? emp.getHead().getName() : null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
                     )).collect(Collectors.toList());
             Map<String, Object> response = new HashMap<>();
             response.put("departments", dtoList);
@@ -122,6 +136,7 @@ public class DepartmentService {
         }
     }
 
+    @Transactional(readOnly = true)
     public Map<String, Object> getCount(int page, int size) {
         PageRequest paging = PageRequest.of(page, size);
         Page<Department> pageDepartments = departmentRepository.findAll(paging);
@@ -131,7 +146,11 @@ public class DepartmentService {
                         dept.getName(),
                         dept.getCreationDate(),
                         dept.getHead() != null ? dept.getHead().getName() : null,
-                        employeeRepository.countByDepartmentId(dept.getId())
+                        null,
+                        employeeRepository.countByDepartmentId(dept.getId()),
+                        null,
+                        null,
+                        null
                 )).collect(Collectors.toList());
         Map<String, Object> response = new HashMap<>();
         response.put("departments", dtoList);
@@ -140,6 +159,7 @@ public class DepartmentService {
         return response;
     }
 
+    @Transactional(readOnly = true)
     public Map<String, Object> getSalaryDetails(int page, int size){
         PageRequest paging = PageRequest.of(page, size);
         Page<Department> pageDepartments = departmentRepository.findAll(paging);
@@ -149,6 +169,8 @@ public class DepartmentService {
                         dept.getName(),
                         dept.getCreationDate(),
                         dept.getHead() != null ? dept.getHead().getName() : null,
+                        null,
+                        null,
                         employeeRepository.findTopSalaryByDepartmentIdOrderBySalary(dept.getId()).getSalary(),
                         employeeRepository.findTopSalaryByDepartmentIdOrderBySalaryDesc(dept.getId()).getSalary(),
                         employeeRepository.avgSalaryByDepartmentId(dept.getId())

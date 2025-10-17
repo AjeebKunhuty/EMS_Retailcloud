@@ -1,65 +1,43 @@
 package org.example.DTO;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.example.model.Employee;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DepartmentDTO {
     private Integer id;
     private String name;
-    private LocalDate creation_date;
+    private LocalDate creationDate;
     private String head;
-    private List<EmployeeDTO> employeeDTOList;
-    private int employeeCount;
+    private List<EmployeeDTO> employeeList;
+    private Integer employeeCount;
     private BigDecimal min;
     private BigDecimal max;
     private BigDecimal avg;
 
-    public DepartmentDTO(Integer id, String name, LocalDate creation_date, String head){
+    public DepartmentDTO(Integer id, String name, LocalDate creationDate, String head, List<EmployeeDTO> employeeList, Integer employeeCount, BigDecimal min, BigDecimal max, BigDecimal avg){
         this.id = id;
         this.name = name;
-        this.creation_date = creation_date;
+        this.creationDate = creationDate;
         this.head = head;
-    }
-
-    public DepartmentDTO(Integer id, String name, LocalDate creation_date, String head, List<EmployeeDTO> employeeDTOList){
-        this.id = id;
-        this.name = name;
-        this.creation_date = creation_date;
-        this.head = head;
-        this.employeeDTOList = employeeDTOList;
-    }
-
-    public DepartmentDTO(Integer id, String name, LocalDate creation_date, String head, int employeeCount){
-        this.id = id;
-        this.name = name;
-        this.creation_date = creation_date;
-        this.head = head;
+        this.employeeList = employeeList;
         this.employeeCount = employeeCount;
-    }
-
-    public DepartmentDTO(Integer id, String name, LocalDate creation_date, String head, BigDecimal min, BigDecimal max, BigDecimal avg){
-        this.id = id;
-        this.name = name;
-        this.creation_date = creation_date;
-        this.head = head;
-        this.max = max;
-        this.min = min;
-        this.avg = avg;
+        this.max =  max != null ? max.setScale(2, RoundingMode.HALF_UP) : null;
+        this.min = min != null ? min.setScale(2, RoundingMode.HALF_UP) : null;
+        this.avg = avg != null ? avg.setScale(2, RoundingMode.HALF_UP) : null;
     }
 
 
     public String getName() { return name; }
     public Integer getId() { return id; }
-    public LocalDate getCreation_date() { return creation_date; }
+    public LocalDate getCreationDate() { return creationDate; }
     public String getHead() { return head; }
-    public List<EmployeeDTO> getEmployeeDTOList() { return employeeDTOList; }
-    public int getEmployeeCount() { return employeeCount; }
+    public List<EmployeeDTO> getEmployeeList() { return employeeList; }
+    public Integer getEmployeeCount() { return employeeCount; }
     public BigDecimal getMax() { return max; }
     public BigDecimal getAvg() { return avg; }
     public BigDecimal getMin() { return min; }
